@@ -50,7 +50,7 @@ $(shell mkdir -p $(STATIC_DIR) $(DEBUG_DIR) $(DEP_DIR))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OPTI) -I $(HEAD_DIR) $(INCLUDES) -o $@ $(OBJ) $(LIBS)
+	$(CC) $(OPTI) -I $(HEAD_DIR) $(INCLUDES) -lncurses -o $@ $(OBJ) $(LIBS)
 	@echo "Compilation terminee. (realease)"
 
 debug: $(OBJ_DEBUG)
