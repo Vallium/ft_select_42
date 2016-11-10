@@ -93,11 +93,11 @@ int		main()
 		return (0);
 	}
 	if (((all->mr = tgetstr("mr", NULL)) == NULL) ||
-			((all->mr = tgetstr("mr", NULL)) == NULL) ||
-			((all->mr = tgetstr("mr", NULL)) == NULL) ||
-			((all->mr = tgetstr("mr", NULL)) == NULL) ||
-			((all->mr = tgetstr("mr", NULL)) == NULL) ||
-			((all->mr = tgetstr("mr", NULL)) == NULL))
+			((all->me = tgetstr("me", NULL)) == NULL) ||
+			((all->us = tgetstr("us", NULL)) == NULL) ||
+			((all->ue = tgetstr("ue", NULL)) == NULL) ||
+			((all->cm = tgetstr("cm", NULL)) == NULL) ||
+			((all->cl = tgetstr("cl", NULL)) == NULL))
 	{
 		ft_putstr_fd("tgetstr error\n", 2);
 		return (0);
