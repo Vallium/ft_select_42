@@ -21,6 +21,9 @@ DEBUG_DIR	= debug
 STATIC_DIR	= static
 DEP_DIR		= dep
 
+LIB_STATIC	= libft/libft.a
+LIB_DEBUG	= libft/libft_debug.a
+LIB_HEAD	= libft/includes
 
 UNAME_S := $(shell uname -s)
 
@@ -39,6 +42,7 @@ OBJ_DEBUG	= $(patsubst %.c,$(DEBUG_DIR)/%.o,$(SRC))
 DEPS		= $(patsubst %.c,$(DEP_DIR)/%.d,$(SRC))
 
 CC			= gcc
+FLAGS		= 
 OPTI		= -O3
 DEPENDS 	= -MT $@ -MD -MP -MF $(subst .o,.d,$@)
 
@@ -49,26 +53,34 @@ $(shell mkdir -p $(STATIC_DIR) $(DEBUG_DIR) $(DEP_DIR))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(OPTI) -I $(HEAD_DIR) $(INCLUDES) -lncurses -o $@ $(OBJ) $(LIBS)
+$(NAME): $(OBJ) $(LIB_STATIC)
+	$(CC) $(FLAGS) $(OPTI) -I $(HEAD_DIR) -I $(LIB_HEAD) -lncurses -o $@ $(OBJ) $(LIB_STATIC)
 	@echo "Compilation terminee. (realease)"
 
-debug: $(OBJ_DEBUG)
-	$(CC) $(OPTI) -I $(HEAD_DIR) $(INCLUDES) -o $(NAME_DEBUG) $(OBJ_DEBUG) $(LIBS) -g
+debug: $(OBJ_DEBUG) $(LIB_DEBUG)
+	$(CC) $(FLAGS) $(OPTI) -I $(HEAD_DIR) -I $(LIB_HEAD) -o $(NAME_DEBUG) $(OBJ_DEBUG) $(LIB_DEBUG) -g
 	@echo "Compilation terminee. (debug)"
 
 -include $(OBJ:.o=.d)
 
 $(STATIC_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(OPTI) $(DEPENDS) -I $(HEAD_DIR) $(INCLUDES) -o $@ -c $<
+	$(CC) $(FLAGS) $(OPTI) $(DEPENDS) -I $(HEAD_DIR) -I $(LIB_HEAD) -o $@ -c $<
 
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(OPTI) $(DEPENDS) -I $(HEAD_DIR) $(INCLUDES) -o $@ -c $< -g
+	$(CC) $(FLAGS) $(OPTI) $(DEPENDS) -I $(HEAD_DIR) -I $(LIB_HEAD) -o $@ -c $< -g
+
+$(LIB_STATIC):
+	make -C libft/ libft.a
+
+$(LIB_DEBUG):
+	make -C libft/ libft_debug.a
 
 clean:
+	make -C libft clean
 	rm -f $(OBJ) $(OBJ_DEBUG) $(DEPS)
 
 fclean: clean
+	make -C libft fclean
 	rm -f $(NAME) $(NAME_DEBUG)
 
 re: fclean
