@@ -3,3 +3,4 @@ ft_select_debug
 static/
 debug/
 dep/
+.DS_Store
