@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/19 15:08:14 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/14 17:13:34 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/14 18:08:53 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,18 @@ int		init_term(t_all *all)
 
 void		reset_term(t_all *all)
 {
-		char *res;
+	char *res;
 
-		ft_putstr_fd("\033[?1049l\033[0m", all->fd);
-		if (tcgetattr(0, &all->termios) == -1)
-			ft_putstr_fd("tcgetattr error\n", 2);
-		all->termios.c_lflag |= (ICANON | ECHO);
-		if (tcsetattr(0, 0, &all->termios) == -1)
-			ft_putstr_fd("tcsetattr error\n", 2);
-		res = tgetstr("ve", NULL);
-		if (res == NULL)
-			ft_putstr_fd("tgetstr error\n", 2);
-		tputs(res, 0, ft_my_outc);
+	ft_putstr_fd("\033[?1049l\033[0m", all->fd);
+	if (tcgetattr(0, &all->termios) == -1)
+		ft_putstr_fd("tcgetattr error\n", 2);
+	all->termios.c_lflag |= (ICANON | ECHO);
+	if (tcsetattr(0, 0, &all->termios) == -1)
+		ft_putstr_fd("tcsetattr error\n", 2);
+	res = tgetstr("ve", NULL);
+	if (res == NULL)
+		ft_putstr_fd("tgetstr error\n", 2);
+	tputs(res, 0, ft_my_outc);
 }
 
 #define K_UP 4283163
@@ -128,6 +128,9 @@ void	ft_sig_int()
 void	sigs_init()
 {
 	signal(SIGINT, ft_sig_int);
+	signal(SIGQUIT, ft_sig_int);
+	// signal(SIGTSTP, ft_sig_stp);
+	// signal(SIGCONT, ft_sig_cont);
 }
 
 int		main()
@@ -152,6 +155,14 @@ int		main()
 		return(printf("tcgetattr error!\n"));
 
 	int		key;
+
+	char *pos = tgetstr("cm", NULL);
+	int longer = 0;
+
+	for (int w = 0; w < ac; w++)
+		if ((int)ft_strlen(av[w]) > longer)
+			longer = ft_strlen(av[w]);
+	longer += 2;
 
 	if (init_term(all) != -1)
 	{
