@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/19 15:08:14 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/14 12:14:20 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/14 12:49:20 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,22 @@ int		main()
 			read(0, &key, sizeof(int));
 			if (key == K_UP)
 				printf("Up key pressed\n");
+			if (key == K_ESC)
+				break;
 		}
+
+		char *res;
+
+		ft_putstr_fd("\033[?1049l\033[0m", all->fd);
+		if (tcgetattr(0, &all->termios) == -1)
+			ft_putstr_fd("tcgetattr error\n", 2);
+		all->termios.c_lflag |= (ICANON | ECHO);
+		if (tcsetattr(0, 0, &all->termios) == -1)
+			ft_putstr_fd("tcsetattr error\n", 2);
+		res = tgetstr("ve", NULL);
+		if (res == NULL)
+			ft_putstr_fd("tgetstr error\n", 2);
+		tputs(res, 0, ft_my_outc);
 	}
 	return (0);
 }
