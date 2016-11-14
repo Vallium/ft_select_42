@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/19 15:08:14 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/14 13:16:14 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/14 14:50:29 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,15 @@ int		main()
 		{
 			key = 0;
 			read(0, &key, sizeof(int));
+			printf("%d\n", key);
 			if (key == K_UP)
 				printf("Up key pressed\n");
+			if (key == K_DOWN)
+				printf("Down key pressed\n");
+			if (key == K_LEFT)
+				printf("Left key pressed\n");
+			if (key == K_RIGHT)
+				printf("Right key pressed\n");
 			if (key == K_ESC)
 				break;
 		}
