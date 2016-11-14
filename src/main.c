@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/19 15:08:14 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/10 18:16:24 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/14 12:14:20 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,52 @@ int		ft_my_outc(int c)
 	return (0);
 }
 
+int		init_term(t_all *all)
+{
+	char	*res;
+
+	ft_putstr_fd("\033[?1049h\033[H", all->fd);
+	all->termios.c_lflag &= ~(ICANON | ECHO);
+	all->termios.c_cc[VMIN] = 1;
+	all->termios.c_cc[VTIME] = 0;
+	if (ioctl(STDIN_FILENO, TIOCGWINSZ, (char*)&all->winsize) < 0)
+	{
+		ft_putstr_fd("TIOCGWINSZ error\n", 2);
+		return (-1);
+	}
+	if (tcsetattr(0, TCSADRAIN, &all->termios) == -1)
+	{
+		ft_putstr_fd("TCSADRAIN error\n", 2);
+		return (-1);
+	}
+	if (((all->mr = tgetstr("mr", NULL)) == NULL) ||
+			((all->me = tgetstr("me", NULL)) == NULL) ||
+			((all->us = tgetstr("us", NULL)) == NULL) ||
+			((all->ue = tgetstr("ue", NULL)) == NULL) ||
+			((all->cm = tgetstr("cm", NULL)) == NULL) ||
+			((all->cl = tgetstr("cl", NULL)) == NULL))
+	{
+		ft_putstr_fd("tgetstr error\n", 2);
+		return (-1);
+	}
+	tputs(all->cl, 0, ft_my_outc);
+	if ((res = tgetstr("vi", NULL)) == NULL)
+	{
+		ft_putstr_fd("tgetstr vr error\n", 2);
+		return (-1);
+	}
+	tputs(res, 0, ft_my_outc);
+	return (0);
+}
+
+#define K_UP 4283163
+#define K_DOWN 4348699
+#define K_LEFT 4479771
+#define K_RIGHT 4414235
+#define K_ESC 27
+#define K_RETURN 10
+#define K_SPACE 32
+
 int		main()
 {
 	char	*term_name;
@@ -74,40 +120,17 @@ int		main()
 	if (tcgetattr(0, &all->termios) < 0)
 		return(printf("tcgetattr error!\n"));
 
-	// Init Term
+	int		key;
 
-	char	*res;
-
-	ft_putstr_fd("\033[?1049h\033[H", all->fd);
-	all->termios.c_lflag &= ~(ICANON | ECHO);
-	all->termios.c_cc[VMIN] = 1;
-	all->termios.c_cc[VTIME] = 0;
-	if (ioctl(STDIN_FILENO, TIOCGWINSZ, (char*)&all->winsize) < 0)
+	if (init_term(all) != -1)
 	{
-		ft_putstr_fd("TIOCGWINSZ error\n", 2);
-		return (0);
+		while (42)
+		{
+			key = 0;
+			read(0, &key, sizeof(int));
+			if (key == K_UP)
+				printf("Up key pressed\n");
+		}
 	}
-	if (tcsetattr(0, TCSADRAIN, &all->termios) == -1)
-	{
-		ft_putstr_fd("TCSADRAIN error\n", 2);
-		return (0);
-	}
-	if (((all->mr = tgetstr("mr", NULL)) == NULL) ||
-			((all->me = tgetstr("me", NULL)) == NULL) ||
-			((all->us = tgetstr("us", NULL)) == NULL) ||
-			((all->ue = tgetstr("ue", NULL)) == NULL) ||
-			((all->cm = tgetstr("cm", NULL)) == NULL) ||
-			((all->cl = tgetstr("cl", NULL)) == NULL))
-	{
-		ft_putstr_fd("tgetstr error\n", 2);
-		return (0);
-	}
-	tputs(all->cl, 0, ft_my_outc);
-	if ((res = tgetstr("vi", NULL)) == NULL)
-	{
-		ft_putstr_fd("tgetstr vr error\n", 2);
-		return (0);
-	}
-	tputs(res, 0, ft_my_outc);
 	return (0);
 }
