@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/19 15:08:14 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/14 14:50:29 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/14 17:13:34 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,20 @@ void		reset_term(t_all *all)
 #define K_RETURN 10
 #define K_SPACE 32
 
+void	ft_sig_int()
+{
+	t_all	*all;
+
+	all = ft_singleton();
+	reset_term(all);
+	exit(0);
+}
+
+void	sigs_init()
+{
+	signal(SIGINT, ft_sig_int);
+}
+
 int		main()
 {
 	char	*term_name;
@@ -124,6 +138,7 @@ int		main()
 	all = ft_singleton();
 
 	// TODO: Catch Signals
+	sigs_init();
 
 	all->fd = open(ttyname(STDIN_FILENO), O_WRONLY);
 	if (all->fd == -1)
