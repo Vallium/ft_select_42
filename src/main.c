@@ -10,33 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_select.h"
+
 #include <stdio.h>
-
-#include <stdlib.h>
-#include <termios.h>
-#include <unistd.h>
-#include <term.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <string.h>
-
-typedef struct termios t_termios;
-typedef struct winsize t_winsize;
-
-typedef struct	s_term
-{
-	t_termios	termios;
-	t_winsize	winsize;
-	char		*cl;
-	char		*us;
-	char		*ue;
-	char		*rv;
-	char		*mr;
-	char		*me;
-	char		*cm;
-	int			fd;
-}				t_term;
 
 t_term	*ft_singleton(void)
 {
@@ -87,12 +63,12 @@ int		init_term()
 		ft_putstr_fd("TCSADRAIN error\n", 2);
 		return (-1);
 	}
-	if (((term->mr = tgetstr("mr", NULL)) == NULL) ||
-			((term->me = tgetstr("me", NULL)) == NULL) ||
-			((term->us = tgetstr("us", NULL)) == NULL) ||
-			((term->ue = tgetstr("ue", NULL)) == NULL) ||
-			((term->cm = tgetstr("cm", NULL)) == NULL) ||
-			((term->cl = tgetstr("cl", NULL)) == NULL))
+	if (((term->cap[MR] = tgetstr("mr", NULL)) == NULL) ||
+			((term->cap[ME] = tgetstr("me", NULL)) == NULL) ||
+			((term->cap[US] = tgetstr("us", NULL)) == NULL) ||
+			((term->cap[UE] = tgetstr("ue", NULL)) == NULL) ||
+			((term->cap[CM] = tgetstr("cm", NULL)) == NULL) ||
+			((term->cap[CL] = tgetstr("cl", NULL)) == NULL))
 	{
 		ft_putstr_fd("tgetstr error\n", 2);
 		return (-1);
@@ -105,6 +81,16 @@ int		init_term()
 	}
 	tputs(res, 0, ft_my_outc);
 	return (0);
+}
+
+void		free_entries()
+{
+	t_term	*term;
+
+	term = ft_singleton();
+	while (--term->nb_entries >= 0)
+		free(term->entries[term->nb_entries].name);
+	free(term->entries);
 }
 
 void		reset_term()
@@ -123,15 +109,9 @@ void		reset_term()
 	if (res == NULL)
 		ft_putstr_fd("tgetstr error\n", 2);
 	tputs(res, 0, ft_my_outc);
-}
 
-#define K_UP 4283163
-#define K_DOWN 4348699
-#define K_LEFT 4479771
-#define K_RIGHT 4414235
-#define K_ESC 27
-#define K_RETURN 10
-#define K_SPACE 32
+	free_entries();
+}
 
 void	ft_sig_int()
 {
@@ -161,7 +141,7 @@ void	refresh_screen(void)
 
 	term = ft_singleton();
 
-	tputs(term->cl, 0, ft_my_outc);
+	tputs(term->cap[CL], 0, ft_my_outc);
 
 	char *pos = tgetstr("cm", NULL);
 	char *test = "~FT_SELECT BY AALLIOT~";
@@ -207,6 +187,29 @@ int		key_press()
 	return (0);
 }
 
+void	init_entries(int ac, char *av[])
+{
+	t_term	*term;
+	int		i;
+
+	term = ft_singleton();
+	term->longest = 0;
+	term->nb_entries = ac - 1;
+	term->entries = (t_entry *)malloc(sizeof(t_entry) * term->nb_entries);
+	i = 0;
+	while (i < term->nb_entries)
+	{
+		term->entries[i].name = ft_strdup(av[i + 1]);
+		term->entries[i].len = ft_strlen(av[i + 1]);
+		term->entries[i].visible = 1;
+		term->entries[i].selected = 0;
+		if (term->entries[i].len > term->longest)
+			term->longest = term->entries[i].len;
+		i++;
+	}
+
+}
+
 int		main(int ac, char *av[])
 {
 	t_term	*term;
@@ -217,37 +220,31 @@ int		main(int ac, char *av[])
 
 	if (init_term() != -1)
 	{
+		init_entries(ac, av);
 
 		char *pos = tgetstr("cm", NULL);
-		int longer = 0;
-
-		for (int w = 0; w < ac; w++)
-			if ((int)ft_strlen(av[w]) > longer)
-				longer = ft_strlen(av[w]);
-		longer += 2;
 
 		while (42)
 		{
-
-			refresh_screen();
+			// refresh_screen();
+			int col;
+			int	colcount = 0;
+			int row = 0;
+			for (int z = 0; z < term->nb_entries; z++)
+			{
+				col = colcount * (term->longest + 2);
+				if (col + (term->longest + 2) > term->winsize.ws_col)
+				{
+					row++;
+					colcount = 0;
+					col = colcount * (term->longest + 2);
+				}
+				tputs(tgoto(pos, col, row), 1, ft_my_outc);
+				tputs(term->entries[z].name, 0, ft_my_outc);
+				colcount++;
+			}
 			if (key_press() == -1)
 				break;
-			// int col;
-			// int	colcount = 0;
-			// int row = 0;
-			// for (int z = 0; z < ac; z++)
-			// {
-			// 	col = colcount * longer;
-			// 	if (col + longer > term->winsize.ws_col)
-			// 	{
-			// 		row++;
-			// 		colcount = 0;
-			// 		col = colcount * longer;
-			// 	}
-			// 	tputs(tgoto(pos, col, row), 1, ft_my_outc);
-			// 	tputs(av[z], 0, ft_my_outc);
-			// 	colcount++;
-			// }
 		}
 		reset_term();
 	}
