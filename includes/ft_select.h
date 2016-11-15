@@ -30,6 +30,8 @@
 # define K_ESC 27
 # define K_RETURN 10
 # define K_SPACE 32
+# define K_DELETE 2117294875
+# define K_BACKSPACE 127
 
 enum cap {CL, US, UE, RV, MR, ME, CM};
 

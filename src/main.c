@@ -135,6 +135,38 @@ void	winsize(void)
 		ft_error("ft_select: error: Can't get terminal size.");
 }
 
+void	print_entries()
+{
+	t_term	*term;
+	int col;
+	int	colcount;
+	int row;
+
+	term = ft_singleton();
+	colcount = 0;
+	row = 0;
+	for (int z = 0; z < term->nb_entries; z++)
+	{
+		if (term->entries[z].visible == 0)
+			continue;
+
+		if (row > term->winsize.ws_row)
+		{
+			row = 0;
+			colcount++;
+		}
+		col = colcount * (term->longest + 2);
+		tputs(tgoto(term->cap[CM], col, row), 1, ft_my_outc);
+		if (term->hover == z)
+			tputs(term->cap[US], 0, ft_my_outc);
+		if (term->entries[z].selected)
+			tputs(term->cap[MR], 0, ft_my_outc);
+		tputs(term->entries[z].name, 0, ft_my_outc);
+		tputs(term->cap[ME], 0, ft_my_outc);
+		row++;
+	}
+}
+
 void	refresh_screen(void)
 {
 	t_term	*term;
@@ -142,13 +174,13 @@ void	refresh_screen(void)
 	term = ft_singleton();
 
 	tputs(term->cap[CL], 0, ft_my_outc);
-
-	char *pos = tgetstr("cm", NULL);
-	char *test = "~FT_SELECT BY AALLIOT~";
-	int	center = (term->winsize.ws_col / 2) - (ft_strlen(test) / 2);
-	int center2 = (term->winsize.ws_row / 2);
-	tputs(tgoto(pos, center, center2), 1, ft_my_outc);
-	tputs(test, 0, ft_my_outc);
+	print_entries();
+	// char *pos = tgetstr("cm", NULL);
+	// char *test = "~FT_SELECT BY AALLIOT~";
+	// int	center = (term->winsize.ws_col / 2) - (ft_strlen(test) / 2);
+	// int center2 = (term->winsize.ws_row / 2);
+	// tputs(tgoto(pos, center, center2), 1, ft_my_outc);
+	// tputs(test, 0, ft_my_outc);
 }
 
 void	sig_win_resize(int i)
@@ -167,21 +199,75 @@ void	sigs_init()
 	// signal(SIGCONT, ft_sig_cont);
 }
 
+void ft_goto_previous()
+{
+	t_term	*term;
+	int 	i;
+
+	term = ft_singleton();
+	i = term->hover;
+	while (i >= 0)
+	{
+		i--;
+		if (term->entries[i].visible == 1)
+		{
+			term->hover = i;
+			return ;
+		}
+	}
+	term->hover = term->nb_entries - 1;
+	
+}
+
+void	ft_goto_next()
+{
+	t_term	*term;
+	int 	i;
+
+	term = ft_singleton();
+	i = term->hover;
+	while (i < term->nb_entries)
+	{
+		i++;
+		if (term->entries[i].visible == 1)
+		{
+			term->hover = i;
+			return ;
+		}
+	}
+	term->hover = 0;
+}
+
 int		key_press()
 {
 	int		key;
+	t_term	*term;
 
 	key = 0;
+	term = ft_singleton();
 	read(0, &key, sizeof(int));
-	printf("%d\n", key);
 	if (key == K_UP)
-		printf("Up key pressed\n");
+		ft_goto_previous();
+		//term->hover = (term->hover > 0) ? term->hover - 1 : term->nb_entries - 1;
 	if (key == K_DOWN)
-		printf("Down key pressed\n");
-	if (key == K_LEFT)
-		printf("Left key pressed\n");
+		term->hover = (term->hover < term->nb_entries - 1) ? term->hover + 1 : 0;
+	if (key == K_LEFT) 
+		term->hover -= term->winsize.ws_row + 1;
 	if (key == K_RIGHT)
-		printf("Right key pressed\n");
+		term->hover += term->winsize.ws_row + 1;
+	if (key == K_SPACE)
+	{
+		term->entries[term->hover].selected = term->entries[term->hover].selected ? 0 : 1;
+		term->hover = (term->hover < term->nb_entries - 1) ? term->hover + 1 : 0;
+	}
+	if (key == K_DELETE || key == K_BACKSPACE)
+	{
+		term->entries[term->hover].visible = 0;
+		term->nb_entries--;
+		if (term->nb_entries == 0)
+			return (-1);
+		term->hover = (term->hover < term->nb_entries - 1) ? term->hover + 1 : 0;
+	}
 	if (key == K_ESC)
 		return (-1);
 	return (0);
@@ -195,6 +281,7 @@ void	init_entries(int ac, char *av[])
 	term = ft_singleton();
 	term->longest = 0;
 	term->nb_entries = ac - 1;
+	term->hover = 0;
 	term->entries = (t_entry *)malloc(sizeof(t_entry) * term->nb_entries);
 	i = 0;
 	while (i < term->nb_entries)
@@ -221,28 +308,9 @@ int		main(int ac, char *av[])
 	if (init_term() != -1)
 	{
 		init_entries(ac, av);
-
-		char *pos = tgetstr("cm", NULL);
-
 		while (42)
 		{
-			// refresh_screen();
-			int col;
-			int	colcount = 0;
-			int row = 0;
-			for (int z = 0; z < term->nb_entries; z++)
-			{
-				col = colcount * (term->longest + 2);
-				if (col + (term->longest + 2) > term->winsize.ws_col)
-				{
-					row++;
-					colcount = 0;
-					col = colcount * (term->longest + 2);
-				}
-				tputs(tgoto(pos, col, row), 1, ft_my_outc);
-				tputs(term->entries[z].name, 0, ft_my_outc);
-				colcount++;
-			}
+			refresh_screen();
 			if (key_press() == -1)
 				break;
 		}
