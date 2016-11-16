@@ -6,14 +6,22 @@
 #    By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/21 15:39:41 by aalliot           #+#    #+#              #
-#*   Updated: 2015/11/19 15:09:59 by aalliot          ###   ########.fr       *#
+#    Updated: 2016/11/16 15:47:41 by aalliot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= ft_select
 NAME_DEBUG	= ft_select_debug
 
-SRC			= main.c
+SRC			= 	main.c		\
+				signals.c	\
+				singleton.c	\
+				win.c		\
+				print.c		\
+				moves.c		\
+				init.c		\
+				free_mem.c	\
+				error.c
 
 HEAD_DIR	= includes
 SRC_DIR		= src
@@ -42,7 +50,7 @@ OBJ_DEBUG	= $(patsubst %.c,$(DEBUG_DIR)/%.o,$(SRC))
 DEPS		= $(patsubst %.c,$(DEP_DIR)/%.d,$(SRC))
 
 CC			= gcc
-FLAGS		= 
+FLAGS		= #-Wall -Wextra -Werror
 OPTI		= -O3
 DEPENDS 	= -MT $@ -MD -MP -MF $(subst .o,.d,$@)
 

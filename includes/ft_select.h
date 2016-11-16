@@ -22,7 +22,6 @@
 # include <fcntl.h>
 # include <string.h>
 
-
 # define K_UP 4283163
 # define K_DOWN 4348699
 # define K_LEFT 4479771
@@ -64,5 +63,30 @@ typedef struct	s_term
 	int			longest;
 	int			hover;
 }				t_term;
+
+t_term	*ft_singleton(void);
+
+int		init_term();
+void	init_entries(int ac, char *av[]);
+
+void	sig_win_resize(int i);
+void	ft_sig_int();
+void	sigs_init();
+
+void	ft_goto_previous();
+void	ft_goto_next();
+int		key_press();
+
+int		ft_my_outc(int c);
+void	print_entries();
+void	refresh_screen(void);
+
+void	winsize(void);
+
+void	free_entries();
+
+void	ft_error(char *err);
+
+void	reset_term();
 
 #endif
