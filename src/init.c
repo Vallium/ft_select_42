@@ -6,7 +6,7 @@
 /*   By: aalliot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 15:29:59 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/16 15:48:09 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/24 15:16:16 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,17 @@ int		init_term()
 	term->termios.c_lflag &= ~(ICANON | ECHO);
 	term->termios.c_cc[VMIN] = 1;
 	term->termios.c_cc[VTIME] = 0;
-	if (ioctl(STDIN_FILENO, TIOCGWINSZ, (char*)&term->winsize) < 0)
-	{
-		ft_putstr_fd("TIOCGWINSZ error\n", 2);
-		return (-1);
-	}
 	if (tcsetattr(0, TCSADRAIN, &term->termios) == -1)
 	{
 		ft_putstr_fd("TCSADRAIN error\n", 2);
 		return (-1);
 	}
-	if (((term->cap[MR] = tgetstr("mr", NULL)) == NULL) ||
-			((term->cap[ME] = tgetstr("me", NULL)) == NULL) ||
-			((term->cap[US] = tgetstr("us", NULL)) == NULL) ||
-			((term->cap[UE] = tgetstr("ue", NULL)) == NULL) ||
-			((term->cap[CM] = tgetstr("cm", NULL)) == NULL) ||
-			((term->cap[CL] = tgetstr("cl", NULL)) == NULL))
+	if ((term->cap[MR] = tgetstr("mr", NULL)) == NULL ||
+		(term->cap[ME] = tgetstr("me", NULL)) == NULL ||
+		(term->cap[US] = tgetstr("us", NULL)) == NULL ||
+		(term->cap[UE] = tgetstr("ue", NULL)) == NULL ||
+		(term->cap[CM] = tgetstr("cm", NULL)) == NULL ||
+		(term->cap[CL] = tgetstr("cl", NULL)) == NULL)
 	{
 		ft_putstr_fd("tgetstr error\n", 2);
 		return (-1);
@@ -63,6 +58,8 @@ int		init_term()
 		return (-1);
 	}
 	tputs(res, 0, ft_my_outc);
+	term->padding_left = 0;
+	winsize();
 	return (0);
 }
 
@@ -74,8 +71,11 @@ void	init_entries(int ac, char *av[])
 	term = ft_singleton();
 	term->longest = 0;
 	term->nb_entries = ac - 1;
+	term->total_entries = term->nb_entries;
 	term->hover = 0;
 	term->entries = (t_entry *)malloc(sizeof(t_entry) * term->nb_entries);
+	if (term->entries == NULL)
+		ft_error("ft_select: error: malloc entries failed");
 	i = 0;
 	while (i < term->nb_entries)
 	{

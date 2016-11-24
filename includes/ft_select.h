@@ -6,7 +6,7 @@
 /*   By: aalliot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 16:25:42 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/15 16:31:44 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/24 15:12:50 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,12 @@ typedef struct	s_term
 	int			fd;
 	t_entry		*entries;
 	int			nb_entries;
+	int			total_entries;
 	int			longest;
 	int			hover;
+	int			nb_column;
+	int			total_column;
+	int			padding_left;
 }				t_term;
 
 t_term	*ft_singleton(void);
