@@ -91,6 +91,6 @@ void	free_entries();
 
 void	ft_error(char *err);
 
-void	reset_term();
+void	ft_reset_term();
 
 #endif
