@@ -14,7 +14,7 @@
 
 void	ft_error(char *err)
 {
-	reset_term();
+	ft_reset_term();
 	ft_putendl_fd(err, 2);
 	exit(EXIT_FAILURE);
 }

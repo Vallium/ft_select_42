@@ -6,22 +6,28 @@
 #    By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/21 15:39:41 by aalliot           #+#    #+#              #
-#    Updated: 2016/11/16 15:47:41 by aalliot          ###   ########.fr        #
+#    Updated: 2016/11/25 12:47:40 by aalliot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= ft_select
 NAME_DEBUG	= ft_select_debug
 
-SRC			= 	main.c		\
-				signals.c	\
-				singleton.c	\
-				win.c		\
-				print.c		\
-				moves.c		\
-				init.c		\
-				free_mem.c	\
-				error.c
+SRC			= 	main.c			\
+				free_entries.c	\
+				ft_error.c		\
+				ft_goto_up.c	\
+				ft_goto_down.c	\
+				ft_goto_left.c	\
+				ft_goto_right.c	\
+				ft_reset_term.c	\
+				init_entries.c	\
+				init_term.c		\
+				keypress.c		\
+				print.c			\
+				signals.c		\
+				singleton.c		\
+				winsize.c
 
 HEAD_DIR	= includes
 SRC_DIR		= src
