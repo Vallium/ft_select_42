@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_goto_up.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/19 15:08:14 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/15 15:45:23 by aalliot          ###   ########.fr       */
+/*   Created: 2016/11/25 12:35:27 by aalliot           #+#    #+#             */
+/*   Updated: 2016/11/25 12:35:30 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-#include <stdio.h>
 
-int		main(int ac, char *av[])
+void ft_goto_up()
 {
 	t_term	*term;
+	int		i;
 
 	term = ft_singleton();
-
-	sigs_init();
-
-	if (init_term() != -1)
+	i = term->hover - 1;
+	if (i < 0)
+		i = term->total_entries - 1;
+	while (i != term->hover && !term->entries[i].visible)
 	{
-		init_entries(ac, av);
-		while (42)
-		{
-			refresh_screen();
-			if (key_press() == -1)
-				break;
-		}
-		ft_reset_term();
+		if (i < 0)
+			i = term->total_entries - 1;
+		i--;
 	}
-	return (0);
+	term->hover = i;
 }

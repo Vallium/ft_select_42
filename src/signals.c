@@ -21,7 +21,7 @@ void	sig_win_resize(int i)
 
 void	ft_sig_int()
 {
-	reset_term();
+	ft_reset_term();
 	exit(0);
 }
 

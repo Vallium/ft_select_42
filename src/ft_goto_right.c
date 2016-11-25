@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_goto_right.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/19 15:08:14 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/15 15:45:23 by aalliot          ###   ########.fr       */
+/*   Created: 2016/11/25 12:35:41 by aalliot           #+#    #+#             */
+/*   Updated: 2016/11/25 12:35:44 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-#include <stdio.h>
 
-int		main(int ac, char *av[])
+static void	goto_start(void)
 {
 	t_term	*term;
+	int	i;
 
 	term = ft_singleton();
+	i = term->hover - ((term->padding_left + 1) * term->winsize.ws_row);
+	term->hover = (i % (term->nb_column + 1));
+	//term->padding_left = 0;
+}
 
-	sigs_init();
+void	ft_goto_right(void)
+{
+	t_term	*term;
+	int		i;
 
-	if (init_term() != -1)
+	term = ft_singleton();
+	i = 0;
+	while (i < term->winsize.ws_row)
 	{
-		init_entries(ac, av);
-		while (42)
-		{
-			refresh_screen();
-			if (key_press() == -1)
-				break;
-		}
-		ft_reset_term();
+		term->hover++;
+		if (term->hover >= term->total_entries)
+			goto_start();
+		if (term->entries[term->hover].visible)
+			i++;
 	}
-	return (0);
 }

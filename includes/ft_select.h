@@ -79,6 +79,12 @@ void	sigs_init();
 
 void	ft_goto_previous();
 void	ft_goto_next();
+
+void	ft_goto_up();
+void	ft_goto_down();
+void	ft_goto_left();
+void	ft_goto_right();
+
 int		key_press();
 
 int		ft_my_outc(int c);
@@ -91,6 +97,6 @@ void	free_entries();
 
 void	ft_error(char *err);
 
-void	ft_reset_term();
+void	ft_reset_term(void);
 
 #endif

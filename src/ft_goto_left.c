@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_goto_left.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/19 15:08:14 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/15 15:45:23 by aalliot          ###   ########.fr       */
+/*   Created: 2016/11/25 12:35:37 by aalliot           #+#    #+#             */
+/*   Updated: 2016/11/25 12:35:39 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-#include <stdio.h>
 
-int		main(int ac, char *av[])
+void	ft_goto_left()
 {
 	t_term	*term;
+	int		jmp;
 
 	term = ft_singleton();
-
-	sigs_init();
-
-	if (init_term() != -1)
+	jmp = term->winsize.ws_row;
+	if (term->hover - jmp < 0)
 	{
-		init_entries(ac, av);
-		while (42)
-		{
-			refresh_screen();
-			if (key_press() == -1)
-				break;
-		}
-		ft_reset_term();
+		jmp -= (term->nb_entries % term->winsize.ws_row);
+		term->hover = term->total_entries - 1;
 	}
-	return (0);
+	while (jmp)
+	{
+		if (term->entries[term->hover].visible)
+			jmp--;
+		term->hover--;
+	}
 }
