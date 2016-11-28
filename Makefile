@@ -6,13 +6,13 @@
 #    By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/21 15:39:41 by aalliot           #+#    #+#              #
-#    Updated: 2016/11/25 12:47:40 by aalliot          ###   ########.fr        #
+#    Updated: 2016/11/28 14:52:49 by aalliot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= ft_select
 NAME_DEBUG	= ft_select_debug
-
+ 
 SRC			= 	main.c			\
 				free_entries.c	\
 				ft_error.c		\
