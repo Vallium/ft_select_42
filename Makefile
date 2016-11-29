@@ -6,7 +6,7 @@
 #    By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/21 15:39:41 by aalliot           #+#    #+#              #
-#    Updated: 2016/11/29 11:37:50 by aalliot          ###   ########.fr        #
+#    Updated: 2016/11/29 11:49:11 by aalliot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,11 +44,13 @@ UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
 	INCLUDES	=
 	LIBS		=
+	FLAGS		= # -Wall -Wextra -Werror
 endif
 
 ifeq ($(UNAME_S),Darwin)
 	INCLUDES	=
 	LIBS		=
+	FLAGS		= -Wall -Wextra -Werror
 endif
 
 OBJ			= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
@@ -56,7 +58,6 @@ OBJ_DEBUG	= $(patsubst %.c,$(DEBUG_DIR)/%.o,$(SRC))
 DEPS		= $(patsubst %.c,$(DEP_DIR)/%.d,$(SRC))
 
 CC			= gcc
-FLAGS		= -Wall -Wextra -Werror
 OPTI		= -O3
 DEPENDS 	= -MT $@ -MD -MP -MF $(subst .o,.d,$@)
 
