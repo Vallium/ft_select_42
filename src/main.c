@@ -6,12 +6,19 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/19 15:08:14 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/29 13:29:46 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/29 18:20:11 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 #include <stdio.h>
+
+/*
+ *	TODO: cursor not appear wheb ctrl+z
+ *	TODO: debug returned values
+ *	TODO: not working as expected when env -i
+ *	TODO: do not save args like empty string
+**/
 
 int		main(int ac, char *av[])
 {
