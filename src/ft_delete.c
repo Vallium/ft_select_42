@@ -35,4 +35,5 @@ void		ft_delete(void)
 	if (term->nb_entries == 0)
 		sig_exit(0);
 	term->hover = next;
+	winsize();
 }
