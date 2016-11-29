@@ -85,7 +85,7 @@ void	ft_goto_left();
 void	ft_goto_right();
 void	ft_do_space();
 void	ft_delete();
-
+int		return_result(void);
 int		key_press();
 
 int		ft_my_outc(int c);

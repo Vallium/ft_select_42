@@ -20,10 +20,28 @@ void	sig_win_resize(int i)
 	refresh_screen();
 }
 
-void	ft_sig_int()
+void	ft_sig_int(int i)
 {
+	(void)i;
 	ft_reset_term();
 	exit(0);
+}
+
+void	ft_sig_stop(int i)
+{
+	(void)i;
+	ft_reset_term();
+}
+
+void	ft_sig_cont(int i)
+{
+	t_term	*term;
+
+	(void)i;
+	term = ft_singleton();
+	tcsetattr(0, TCSADRAIN, &(term->termios));
+	winsize();
+	refresh_screen();
 }
 
 void	init_signals()
@@ -31,6 +49,6 @@ void	init_signals()
 	signal(SIGINT, ft_sig_int);
 	signal(SIGQUIT, ft_sig_int);
 	signal(SIGWINCH, sig_win_resize);
-	// signal(SIGTSTP, ft_sig_stp);
-	// signal(SIGCONT, ft_sig_cont);
+	signal(SIGSTOP, ft_sig_stop);
+	signal(SIGCONT, ft_sig_cont);
 }

@@ -42,14 +42,21 @@ void	scroll_bar(void)
 static void	too_small(void)
 {
 	t_term	*term;
-	int		i;
+	int		row;
+	int		col;
 
 	term = ft_singleton();
-	i = term->winsize.ws_row * term->winsize.ws_col;
-	while (i)
+	row = 0;
+	while (row < term->winsize.ws_row)
 	{
-		tputs("X", 0, ft_my_outc);
-		i--;
+		col = 0;
+		while (col < term->winsize.ws_col)
+		{
+			tputs(tgoto(term->cap[CM], col, row), 1, ft_my_outc);
+			tputs("X", 0, ft_my_outc);
+			col++;
+		}
+		row++;
 	}
 	return ;
 }

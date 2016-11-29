@@ -22,17 +22,19 @@ int		key_press()
 	read(0, &key, sizeof(int));
 	if (key == K_UP)
 		ft_goto_up();
-	if (key == K_DOWN)
+	else if (key == K_DOWN)
 		ft_goto_down();
-	if (key == K_LEFT) 
+	else if (key == K_LEFT) 
 		ft_goto_left();
-	if (key == K_RIGHT)
+	else if (key == K_RIGHT)
 		ft_goto_right();
-	if (key == K_SPACE)
+	else if (key == K_SPACE)
 		ft_do_space();
-	if (key == K_DELETE || key == K_BACKSPACE)
+	else if (key == K_RETURN)
+		return (return_result());
+	else if (key == K_DELETE || key == K_BACKSPACE)
 		ft_delete();
-	if (key == K_ESC)
+	else if (key == K_ESC)
 		return (-1);
 	return (0);
 }

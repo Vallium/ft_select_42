@@ -6,7 +6,7 @@
 #    By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/21 15:39:41 by aalliot           #+#    #+#              #
-#    Updated: 2016/11/29 13:45:22 by aalliot          ###   ########.fr        #
+#    Updated: 2016/11/29 16:02:54 by aalliot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC			= 	main.c			\
 				ft_goto_left.c	\
 				ft_goto_right.c	\
 				ft_do_space.c	\
+				return_entries.c\
 				ft_delete.c		\
 				ft_reset_term.c	\
 				refresh_screen.c\
