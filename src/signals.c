@@ -6,11 +6,12 @@
 /*   By: aalliot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 11:13:05 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/16 11:13:09 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/29 11:41:18 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+#include <signal.h>
 
 void	sig_win_resize(int i)
 {
