@@ -6,7 +6,7 @@
 #    By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/21 15:39:41 by aalliot           #+#    #+#              #
-#    Updated: 2016/11/29 11:49:11 by aalliot          ###   ########.fr        #
+#    Updated: 2016/11/29 13:45:22 by aalliot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,17 @@ SRC			= 	main.c			\
 				ft_goto_down.c	\
 				ft_goto_left.c	\
 				ft_goto_right.c	\
+				ft_do_space.c	\
+				ft_delete.c		\
 				ft_reset_term.c	\
+				refresh_screen.c\
+				refresh_padding_left.c	\
 				init_entries.c	\
 				init_term.c		\
 				keypress.c		\
 				print.c			\
 				signals.c		\
+				sig_exit.c		\
 				singleton.c		\
 				winsize.c
 
@@ -50,7 +55,7 @@ endif
 ifeq ($(UNAME_S),Darwin)
 	INCLUDES	=
 	LIBS		=
-	FLAGS		= -Wall -Wextra -Werror
+	FLAGS		= -Wall -Wextra #-Werror
 endif
 
 OBJ			= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
@@ -73,7 +78,7 @@ $(NAME): $(OBJ) $(LIB_STATIC)
 	@echo "Compilation terminee. (realease)"
 
 debug: $(OBJ_DEBUG) $(LIB_DEBUG)
-	$(CC) $(FLAGS) $(OPTI) -I $(HEAD_DIR) -I $(LIB_HEAD) -o $(NAME_DEBUG) $(OBJ_DEBUG) $(LIB_DEBUG) -g
+	$(CC) $(FLAGS) $(OPTI) -I $(HEAD_DIR) -I $(LIB_HEAD) -lncurses -o $(NAME_DEBUG) $(OBJ_DEBUG) $(LIB_DEBUG) -g
 	@echo "Compilation terminee. (debug)"
 
 -include $(OBJ:.o=.d)

@@ -12,6 +12,8 @@
 
 #include "ft_select.h"
 
+#include <stdio.h>
+
 void	winsize(void)
 {
 	t_term	*term;
@@ -23,7 +25,7 @@ void	winsize(void)
 	{
 		term->nb_column = term->winsize.ws_col / (term->longest + 2);
 		term->total_column = (term->nb_entries / term->winsize.ws_row) + 1;
-		if (term->nb_column >= term->total_column)
-			term->padding_left = 0;
+		// if (term->nb_column >= term->total_column)
+		// 	term->padding_left = 0;
 	}
 }

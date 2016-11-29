@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_goto_left.c                                     :+:      :+:    :+:   */
+/*   ft_delete.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/25 12:35:37 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/29 12:30:49 by aalliot          ###   ########.fr       */
+/*   Created: 2016/11/29 12:39:59 by aalliot           #+#    #+#             */
+/*   Updated: 2016/11/29 13:31:38 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void	ft_goto_left()
+static void		free_entry(void *entry, size_t size)
+{
+	free(((t_entry *)entry)->name);
+	((t_entry *)entry)->name = NULL;
+	free(entry);
+	entry = NULL;
+	(void)size;
+}
+
+void		ft_delete(void)
 {
 	t_term	*term;
-	int		i;
+	t_lstd	*next;
 
 	term = ft_singleton();
-	i = 0;
-	while (i < term->winsize.ws_row - term->padding_bottom)
-	{
-		term->hover = term->hover->prev;
-		i++;
-	}
+	term->nb_entries--;
+	next = term->hover->next;
+	if (term->hover == term->entries)
+		term->entries = next;
+	ft_lstddelone(&term->hover, free_entry);
+	if (term->nb_entries == 0)
+		sig_exit(0);
+	term->hover = next;
 }

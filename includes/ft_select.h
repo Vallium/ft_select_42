@@ -6,7 +6,7 @@
 /*   By: aalliot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 16:25:42 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/24 15:12:50 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/29 13:44:17 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ typedef struct		s_pos
 typedef struct		s_entry
 {
 	char			*name;
-	int				len;
-	short			visible;
 	short			selected;
-	t_pos			pos;
+	int				id;
 }					t_entry;
 
 typedef struct	s_term
@@ -58,14 +56,14 @@ typedef struct	s_term
 	t_winsize	winsize;
 	char		*cap[7];
 	int			fd;
-	t_entry		*entries;
+	t_lstd		*entries;
 	int			nb_entries;
-	int			total_entries;
+	t_lstd		*hover;
 	int			longest;
-	int			hover;
 	int			nb_column;
 	int			total_column;
 	int			padding_left;
+	int			padding_bottom;
 }				t_term;
 
 t_term	*ft_singleton(void);
@@ -75,7 +73,8 @@ void	init_entries(int ac, char *av[]);
 
 void	sig_win_resize(int i);
 void	ft_sig_int();
-void	sigs_init();
+void	init_signals();
+void	sig_exit(int i);
 
 void	ft_goto_previous();
 void	ft_goto_next();
@@ -84,12 +83,15 @@ void	ft_goto_up();
 void	ft_goto_down();
 void	ft_goto_left();
 void	ft_goto_right();
+void	ft_do_space();
+void	ft_delete();
 
 int		key_press();
 
 int		ft_my_outc(int c);
 void	print_entries();
 void	refresh_screen(void);
+void	refresh_padding_left();
 
 void	winsize(void);
 

@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/19 15:08:14 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/15 15:45:23 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/29 13:29:46 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 
 int		main(int ac, char *av[])
 {
-	t_term	*term;
-
-	term = ft_singleton();
-
-	sigs_init();
+	if (ac < 2)
+		return (0);
+	init_signals();
 
 	if (init_term() != -1)
 	{

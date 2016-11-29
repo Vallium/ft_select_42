@@ -54,7 +54,7 @@ int		init_term()
 	// tputs(term->cl, 0, ft_my_outc);
 	if ((res = tgetstr("vi", NULL)) == NULL)
 	{
-		ft_putstr_fd("tgetstr vr error\n", 2);
+		ft_putstr_fd("tgetstr vi error\n", 2);
 		return (-1);
 	}
 	tputs(res, 0, ft_my_outc);
