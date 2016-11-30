@@ -6,7 +6,7 @@
 #    By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/21 15:39:41 by aalliot           #+#    #+#              #
-#    Updated: 2016/11/29 16:02:54 by aalliot          ###   ########.fr        #
+#    Updated: 2016/11/30 17:22:15 by aalliot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME		= ft_select
 NAME_DEBUG	= ft_select_debug
  
 SRC			= 	main.c			\
+				ft_my_outc.c	\
 				free_entries.c	\
 				ft_error.c		\
 				ft_goto_up.c	\
@@ -59,7 +60,7 @@ endif
 ifeq ($(UNAME_S),Darwin)
 	INCLUDES	=
 	LIBS		=
-	FLAGS		= -Wall -Wextra #-Werror
+	FLAGS		= -Wall -Wextra -Werror
 endif
 
 OBJ			= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
@@ -79,11 +80,11 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIB_STATIC)
 	$(CC) $(FLAGS) $(OPTI) -I $(HEAD_DIR) -I $(LIB_HEAD) -lncurses -o $@ $(OBJ) $(LIB_STATIC)
-	@echo "Compilation terminee. (realease)"
+	@echo "Compilation complete. (realease)"
 
 debug: $(OBJ_DEBUG) $(LIB_DEBUG)
 	$(CC) $(FLAGS) $(OPTI) -I $(HEAD_DIR) -I $(LIB_HEAD) -lncurses -o $(NAME_DEBUG) $(OBJ_DEBUG) $(LIB_DEBUG) -g
-	@echo "Compilation terminee. (debug)"
+	@echo "Compilation complete. (debug)"
 
 -include $(OBJ:.o=.d)
 

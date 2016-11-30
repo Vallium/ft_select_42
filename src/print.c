@@ -12,15 +12,6 @@
 
 #include "ft_select.h"
 
-int				ft_my_outc(int c)
-{
-	t_term		*term;
-
-	term = ft_singleton();
-	write(term->fd, &c, 1);
-	return (0);
-}
-
 static void		print_entry(void)
 {
 	t_term	*term;

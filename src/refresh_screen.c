@@ -12,7 +12,7 @@
 
 #include "ft_select.h"
 
-void			scroll_bar(void)
+static void		scroll_bar(void)
 {
 	t_term	*term;
 	int		size_col;
