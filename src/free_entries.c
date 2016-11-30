@@ -6,13 +6,13 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 17:23:29 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/29 12:16:45 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/30 16:10:51 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-static void delete_entries(void *content, size_t size)
+static void		delete_entries(void *content, size_t size)
 {
 	t_entry *entry;
 
@@ -24,7 +24,7 @@ static void delete_entries(void *content, size_t size)
 	(void)size;
 }
 
-void		free_entries(void)
+void			free_entries(void)
 {
 	t_term	*term;
 	int		i;

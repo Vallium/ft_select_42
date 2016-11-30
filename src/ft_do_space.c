@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 12:36:22 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/29 12:39:00 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/30 16:12:09 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		ft_do_space(void)
 	int		i;
 
 	term = ft_singleton();
-	i = ((t_entry*)term->hover->content)->selected ? 0: 1;
+	i = ((t_entry*)term->hover->content)->selected ? 0 : 1;
 	((t_entry*)term->hover->content)->selected = i;
 	ft_goto_down();
 }

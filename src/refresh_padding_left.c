@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 13:38:43 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/29 13:45:04 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/30 16:24:51 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ void		refresh_padding_left(void)
 		else if (entry->id > last)
 			term->padding_left++;
 		else
-			break;
+			break ;
 	}
 }

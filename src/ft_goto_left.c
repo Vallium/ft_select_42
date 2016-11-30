@@ -6,13 +6,13 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 12:35:37 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/29 12:30:49 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/30 16:13:09 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void	ft_goto_left()
+void	ft_goto_left(void)
 {
 	t_term	*term;
 	t_entry	*entry;

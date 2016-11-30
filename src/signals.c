@@ -6,7 +6,7 @@
 /*   By: aalliot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 11:13:05 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/29 13:13:13 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/30 16:32:17 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_sig_cont(int i)
 	refresh_screen();
 }
 
-void	init_signals()
+void	init_signals(void)
 {
 	signal(SIGINT, ft_sig_int);
 	signal(SIGQUIT, ft_sig_int);

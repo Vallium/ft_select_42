@@ -6,22 +6,20 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 15:29:59 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/24 15:16:16 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/30 16:26:08 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 #include "stdio.h"
 
-int		init_term()
-{	
+int		init_term(void)
+{
+	t_term	*term;
 	char	*term_name;
 	char	*res;
 
-	t_term *term;
-
 	term = ft_singleton();
-
 	term->fd = open(ttyname(STDIN_FILENO), O_WRONLY);
 	if (term->fd == -1)
 		ft_error_init("ft_select: Open error");
@@ -51,7 +49,6 @@ int		init_term()
 		ft_putstr_fd("tgetstr error\n", 2);
 		return (-1);
 	}
-	// tputs(term->cl, 0, ft_my_outc);
 	if ((res = tgetstr("vi", NULL)) == NULL)
 	{
 		ft_putstr_fd("tgetstr vi error\n", 2);

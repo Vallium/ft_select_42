@@ -6,13 +6,13 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 13:35:37 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/29 13:37:44 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/30 16:33:01 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void	scroll_bar(void)
+void			scroll_bar(void)
 {
 	t_term	*term;
 	int		size_col;
@@ -29,17 +29,17 @@ void	scroll_bar(void)
 	tputs(term->cap[MR], 0, ft_my_outc);
 	while (i < term->winsize.ws_col - left)
 	{
-		if (i >= (term->padding_left * size_col) &&\
-			   	i <= (term->padding_left + term->nb_column) * size_col)
-		   tputs("#", 0, ft_my_outc);
-		else	
+		if (i >= (term->padding_left * size_col) && \
+				i <= (term->padding_left + term->nb_column) * size_col)
+			tputs("#", 0, ft_my_outc);
+		else
 			tputs("-", 0, ft_my_outc);
 		i++;
 	}
 	tputs(term->cap[ME], 0, ft_my_outc);
 }
 
-static void	too_small(void)
+static void		too_small(void)
 {
 	t_term	*term;
 	int		row;
@@ -61,7 +61,7 @@ static void	too_small(void)
 	return ;
 }
 
-void		refresh_screen(void)
+void			refresh_screen(void)
 {
 	t_term	*term;
 
@@ -69,7 +69,7 @@ void		refresh_screen(void)
 	term->padding_bottom = 1;
 	tputs(term->cap[CL], 0, ft_my_outc);
 	if (term->winsize.ws_col < term->longest + 2)
-		return too_small();
+		return (too_small());
 	refresh_padding_left();
 	if (term->nb_column < term->total_column)
 		scroll_bar();

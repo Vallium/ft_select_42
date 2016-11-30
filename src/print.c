@@ -6,13 +6,13 @@
 /*   By: aalliot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 15:25:11 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/29 13:11:15 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/30 16:27:52 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int		ft_my_outc(int c)
+int				ft_my_outc(int c)
 {
 	t_term		*term;
 
@@ -21,7 +21,7 @@ int		ft_my_outc(int c)
 	return (0);
 }
 
-static void	print_entry(void)
+static void		print_entry(void)
 {
 	t_term	*term;
 	t_entry	*entry;
@@ -36,7 +36,7 @@ static void	print_entry(void)
 	tputs(term->cap[ME], 0, ft_my_outc);
 }
 
-void		print_entries(void)
+void			print_entries(void)
 {
 	t_term	*term;
 	t_entry	*entry;
@@ -54,9 +54,11 @@ void		print_entries(void)
 		entry->id = i;
 		if (i && i % row == 0)
 			col++;
-		if (col >= term->padding_left && col - term->padding_left < term->nb_column)
+		if (col >= term->padding_left && col \
+				- term->padding_left < term->nb_column)
 		{
-			tputs(tgoto(term->cap[CM], (col - term->padding_left) * (term->longest + 2), i % row), 1, ft_my_outc);
+			tputs(tgoto(term->cap[CM], (col - term->padding_left) \
+						* (term->longest + 2), i % row), 1, ft_my_outc);
 			print_entry();
 		}
 		term->entries = term->entries->next;

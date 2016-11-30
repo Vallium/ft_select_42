@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 12:39:59 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/29 13:31:38 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/30 16:12:48 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void		free_entry(void *entry, size_t size)
 	(void)size;
 }
 
-void		ft_delete(void)
+void			ft_delete(void)
 {
 	t_term	*term;
 	t_lstd	*next;
