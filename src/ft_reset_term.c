@@ -28,5 +28,4 @@ void		ft_reset_term(void)
 	if (res == NULL)
 		ft_putstr_fd("tgetstr error\n", 2);
 	tputs(res, 0, ft_my_outc);
-	// free_entries();
 }

@@ -13,10 +13,6 @@
 #include "ft_select.h"
 #include <stdio.h>
 
-/*
- *	TODO: cursor not appear wheb ctrl+z
-**/
-
 int		main(int ac, char *av[])
 {
 	if (ac < 2)
