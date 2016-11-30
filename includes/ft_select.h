@@ -71,10 +71,7 @@ t_term				*ft_singleton(void);
 int					init_term();
 void				init_entries(int ac, char *av[]);
 
-void				sig_win_resize(int i);
-void				ft_sig_int();
 void				init_signals();
-void				sig_exit(int i);
 
 void				ft_goto_previous();
 void				ft_goto_next();
@@ -92,6 +89,11 @@ int					ft_my_outc(int c);
 void				print_entries();
 void				refresh_screen(void);
 void				refresh_padding_left();
+
+void				sig_exit(int i);
+void				sig_winch(int i);
+void				sig_tstp(int i);
+void				sig_cont(int i);
 
 void				winsize(void);
 

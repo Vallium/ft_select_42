@@ -32,6 +32,9 @@ SRC			= 	main.c			\
 				print.c			\
 				signals.c		\
 				sig_exit.c		\
+				sig_winch.c		\
+				sig_tstp.c		\
+				sig_cont.c		\
 				singleton.c		\
 				winsize.c
 
