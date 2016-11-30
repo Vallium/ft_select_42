@@ -27,6 +27,12 @@ void	init_entries(int ac, char *av[])
 	i = 1;
 	while (i < ac)
 	{
+		if (!ft_strcmp(av[i], ""))
+		{
+			term->nb_entries--;
+			i++;
+			continue;
+		}
 		len = ft_strlen(av[i]);
 		entry.name = ft_strdup(av[i]);
 		entry.selected = 0;

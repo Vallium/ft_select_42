@@ -17,7 +17,6 @@
  *	TODO: cursor not appear wheb ctrl+z
  *	TODO: debug returned values
  *	TODO: not working as expected when env -i
- *	TODO: do not save args like empty string
 **/
 
 int		main(int ac, char *av[])
