@@ -15,16 +15,14 @@
 int	return_result(void)
 {
 	t_term	*term;
-	int		i;
 	t_entry	*entry;
+	int		i;
 	int		space;
 
 	term = ft_singleton();
 	i = 0;
 	space = 0;
 	ft_reset_term();
-			ft_putstr("test");
-
 	while (i < term->nb_entries)
 	{
 		entry = (t_entry *)term->entries->content;
@@ -38,6 +36,7 @@ int	return_result(void)
 		term->entries = term->entries->next;
 		i++;
 	}
-	return (-1);
+	free_entries();
+	exit(0);
 }
 

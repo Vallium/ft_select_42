@@ -36,6 +36,7 @@ int		main(int ac, char *av[])
 				break;
 		}
 		ft_reset_term();
+		free_entries();
 	}
 	return (0);
 }
