@@ -22,6 +22,6 @@ void	winsize(void)
 	if (term->nb_entries - 2)
 	{
 		term->nb_column = term->winsize.ws_col / (term->longest + 2);
-		term->total_column = (term->nb_entries / term->winsize.ws_row) + 1;
+		term->total_column = (term->nb_entries / (term->winsize.ws_row - term->padding_bottom)) + 1;
 	}
 }
