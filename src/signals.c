@@ -6,7 +6,7 @@
 /*   By: aalliot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 11:13:05 by aalliot           #+#    #+#             */
-/*   Updated: 2016/11/30 16:32:17 by aalliot          ###   ########.fr       */
+/*   Updated: 2016/11/30 16:42:19 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	ft_sig_cont(int i)
 
 	(void)i;
 	init_term();
+	signal(SIGTSTP, ft_sig_stop);
 	term = ft_singleton();
 	tcsetattr(0, TCSADRAIN, &(term->termios));
 	winsize();
