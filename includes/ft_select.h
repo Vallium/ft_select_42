@@ -98,6 +98,7 @@ void	winsize(void);
 void	free_entries();
 
 void	ft_error(char *err);
+void	ft_error_init(char *err);
 
 void	ft_reset_term(void);
 

@@ -15,8 +15,6 @@
 
 /*
  *	TODO: cursor not appear wheb ctrl+z
- *	TODO: debug returned values
- *	TODO: not working as expected when env -i
 **/
 
 int		main(int ac, char *av[])

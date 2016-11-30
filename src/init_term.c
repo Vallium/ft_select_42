@@ -24,14 +24,14 @@ int		init_term()
 
 	term->fd = open(ttyname(STDIN_FILENO), O_WRONLY);
 	if (term->fd == -1)
-		return (printf("Open error\n"));
+		ft_error_init("ft_select: Open error");
 	term_name = getenv("TERM");
 	if (term_name == NULL)
-		return (printf("getenv error\n"));
+		ft_error_init("ft_select: getenv error");
 	if (tgetent(NULL, term_name) == -1)
-		return (printf("getent error!\n"));
+		ft_error_init("ft_select: getent error");
 	if (tcgetattr(0, &term->termios) < 0)
-		return(printf("tcgetattr error!\n"));
+		ft_error_init("ft_select: tcgetattr error");
 	ft_putstr_fd("\033[?1049h\033[H", term->fd);
 	term->termios.c_lflag &= ~(ICANON | ECHO);
 	term->termios.c_cc[VMIN] = 1;
