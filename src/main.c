@@ -17,7 +17,10 @@ int		main(int ac, char *av[])
 	int		key_press_ret;
 
 	if (ac < 2)
+	{
+		ft_putendl_fd("ft_select: too few arguments", 2);
 		return (0);
+	}
 	init_signals();
 	if (init_term() != -1)
 	{
