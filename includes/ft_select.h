@@ -70,11 +70,7 @@ t_term				*ft_singleton(void);
 
 int					init_term();
 void				init_entries(int ac, char *av[]);
-
 void				init_signals();
-
-void				ft_goto_previous();
-void				ft_goto_next();
 
 void				ft_goto_up();
 void				ft_goto_down();
@@ -83,10 +79,12 @@ void				ft_goto_right();
 void				ft_do_space();
 void				ft_delete();
 int					return_result(void);
+
 int					key_press();
 
 int					ft_my_outc(int c);
 void				print_entries();
+
 void				refresh_screen(void);
 void				refresh_padding_left();
 
@@ -96,12 +94,9 @@ void				sig_tstp(int i);
 void				sig_cont(int i);
 
 void				winsize(void);
-
-void				free_entries();
-
 void				ft_error(char *err);
 void				ft_error_init(char *err);
-
 void				ft_reset_term(void);
+void				free_entries();
 
 #endif
