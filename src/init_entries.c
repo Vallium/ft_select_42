@@ -50,6 +50,8 @@ void			init_entries(int ac, char *av[])
 			term->nb_entries--;
 		i++;
 	}
+	if (!term->nb_entries)
+		ft_error("ft_select: invalid args");
 	term->hover = term->entries;
 	winsize();
 }
