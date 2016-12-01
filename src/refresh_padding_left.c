@@ -12,7 +12,30 @@
 
 #include "ft_select.h"
 
-void		refresh_padding_left(void)
+static int		set_padding_left(t_entry *entry, int first, int last)
+{
+	t_term	*term;
+
+	term = ft_singleton();
+	if (term->total_column < term->nb_column)
+	{
+		term->padding_left = 0;
+		return (0);
+	}
+	else if (term->padding_left < 0)
+		term->padding_left = term->total_column - term->nb_column;
+	else if (term->padding_left > term->total_column - term->nb_column)
+		term->padding_left = 0;
+	else if (entry->id < first)
+		term->padding_left--;
+	else if (entry->id > last)
+		term->padding_left++;
+	else
+		return (0);
+	return (1);
+}
+
+void			refresh_padding_left(void)
 {
 	t_term	*term;
 	t_entry	*entry;
@@ -27,20 +50,7 @@ void		refresh_padding_left(void)
 	{
 		first = term->padding_left * row;
 		last = (term->padding_left + term->nb_column) * row - 1;
-		if (term->total_column < term->nb_column)
-		{
-			term->padding_left = 0;
-			break ;
-		}
-		else if (term->padding_left < 0)
-			term->padding_left = term->total_column - term->nb_column;
-		else if (term->padding_left > term->total_column - term->nb_column)
-			term->padding_left = 0;
-		else if (entry->id < first)
-			term->padding_left--;
-		else if (entry->id > last)
-			term->padding_left++;
-		else
+		if (!set_padding_left(entry, first, last))
 			break ;
 	}
 }
