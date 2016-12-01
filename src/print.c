@@ -42,7 +42,6 @@ void			print_entries(void)
 	while (i < term->nb_entries)
 	{
 		entry = (t_entry *)term->entries->content;
-		entry->id = i;
 		if (i && i % row == 0)
 			col++;
 		if (col >= term->padding_left && col \
@@ -53,6 +52,6 @@ void			print_entries(void)
 			print_entry();
 		}
 		term->entries = term->entries->next;
-		i++;
+		entry->id = i++;
 	}
 }
