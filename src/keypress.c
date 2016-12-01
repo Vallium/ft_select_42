@@ -36,5 +36,7 @@ int		key_press(void)
 		ft_delete();
 	else if (key == K_ESC)
 		return (-1);
-	return (0);
+	else
+		return (0);
+	return (1);
 }
