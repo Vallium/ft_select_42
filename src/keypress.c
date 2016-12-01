@@ -12,14 +12,14 @@
 
 #include "ft_select.h"
 
-int		key_press(void)
+static int		get_key(t_term *term)
 {
 	int		key;
-	t_term	*term;
 
 	key = 0;
-	term = ft_singleton();
 	read(0, &key, sizeof(int));
+	if (term->winsize.ws_col < term->longest)
+		return (0);
 	if (key == K_UP)
 		ft_goto_up();
 	else if (key == K_DOWN)
@@ -39,4 +39,12 @@ int		key_press(void)
 	else
 		return (0);
 	return (1);
+}
+
+int				key_press(void)
+{
+	t_term	*term;
+
+	term = ft_singleton();
+	return (get_key(term));
 }
